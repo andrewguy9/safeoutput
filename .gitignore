@@ -1,0 +1,5 @@
+build/
+dist/
+eggs/
+safeoutput.egg-info/
+safeoutput/*.pyc
