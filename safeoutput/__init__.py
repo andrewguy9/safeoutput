@@ -33,6 +33,7 @@ class _SafeOutputWrapper:
     if self.dst is not None and commit == True:
       rename(self.fd.name, self.dst)
       self.fd.delete = False
+    self.dst = None
     self.fd.close()
 
   def __exit__(self, exc_type, exc_value, traceback):
