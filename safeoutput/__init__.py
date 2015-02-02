@@ -4,7 +4,7 @@ from sys import stdout
 from tempfile import NamedTemporaryFile
 
 
-def safe_output(dst=None):
+def open(dst=None):
   if dst:
     fd = NamedTemporaryFile(dir=dirname(abspath(dst)))
   else:
