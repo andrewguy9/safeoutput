@@ -1,4 +1,4 @@
-from safeoutput import SafeOutputFile
+from safeoutput import safe_output
 from os.path import isfile
 from os import remove
 
@@ -20,7 +20,7 @@ def test_success():
   file_name = "testfile"
   file_data = "testoutput"
   ensure_file_absent(file_name)
-  with SafeOutputFile(file_name) as f:
+  with safe_output(file_name) as f:
     f.write(file_data)
   assert expected_file(file_name, file_data)
 
@@ -30,7 +30,7 @@ def test_exception():
   file_data = "testoutput"
   ensure_file_absent(file_name)
   try:
-    with SafeOutputFile(file_name) as f:
+    with safe_output(file_name) as f:
       f.write(file_data)
       raise ValueError("We eff'ed up")
   except ValueError:
