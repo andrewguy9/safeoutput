@@ -3,3 +3,5 @@ dist/
 eggs/
 safeoutput.egg-info/
 safeoutput/*.pyc
+.tox/
+tests/__pycache__/
