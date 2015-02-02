@@ -1,6 +1,7 @@
 import safeoutput
 from os.path import isfile
 from os import remove
+import pytest
 
 def ensure_file_absent(path):
   try:
@@ -60,4 +61,16 @@ def test_close_exception():
   except ValueError:
     pass
   assert expected_file(file_name, None)
+
+def test_write_after_close():
+  file_name = "testfile"
+  file_data = "testoutput"
+  ensure_file_absent(file_name)
+  f = safeoutput.open(file_name)
+  f.write(file_data)
+  f.close()
+  assert expected_file(file_name, file_data)
+  with pytest.raises(ValueError):
+    f.write(file_data)
+  assert expected_file(file_name, file_data)
 
