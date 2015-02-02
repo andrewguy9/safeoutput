@@ -16,7 +16,7 @@ def expected_file(path, expected):
   else:
     return False == isfile(path)
 
-def test_success():
+def test_with_success():
   file_name = "testfile"
   file_data = "testoutput"
   ensure_file_absent(file_name)
@@ -25,7 +25,7 @@ def test_success():
   assert expected_file(file_name, file_data)
 
 
-def test_exception():
+def test_with_exception():
   file_name = "testfile"
   file_data = "testoutput"
   ensure_file_absent(file_name)
@@ -33,6 +33,30 @@ def test_exception():
     with safeoutput.open(file_name) as f:
       f.write(file_data)
       raise ValueError("We eff'ed up")
+  except ValueError:
+    pass
+  assert expected_file(file_name, None)
+
+def test_close_success():
+  file_name = "testfile"
+  file_data = "testoutput"
+  ensure_file_absent(file_name)
+  f = safeoutput.open(file_name)
+  f.write(file_data)
+  f.close()
+  assert expected_file(file_name, file_data)
+
+
+def test_close_exception():
+  file_name = "testfile"
+  file_data = "testoutput"
+  ensure_file_absent(file_name)
+  def write():
+    f = safeoutput.open(file_name)
+    f.write(file_data)
+    raise ValueError("We eff'ed up")
+  try:
+    write()
   except ValueError:
     pass
   assert expected_file(file_name, None)
