@@ -18,11 +18,11 @@ import safeoutput
 def calc(line):
   return line+1
   
-input_fname = sys.argv[0]
-output_fname = sys.argv[1]
+input_fname = sys.argv[1]
+output_fname = sys.argv[2]
 
 with open(input_fname, 'r') as input:
-  with safeoutput.safe_output(output_fname, 'r') as output:
+  with safeoutput.open(output_fname) as output:
     for line in input.xreadlines():
-      output.write(calc(int(line)))
+      output.write(str(calc(int(line))))
 ```
