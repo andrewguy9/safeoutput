@@ -1,12 +1,11 @@
+import argparse
+import logging
+import sys
 from builtins import object
 from os import rename
 from os.path import abspath, dirname
 from sys import stdout
 from tempfile import NamedTemporaryFile
-import argparse
-import sys
-
-import logging
 
 LOG = logging.getLogger(__name__)
 

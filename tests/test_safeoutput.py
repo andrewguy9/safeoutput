@@ -1,8 +1,9 @@
-import safeoutput
-from os.path import isfile
-from os import remove
-import pytest
 import inspect
+from os import remove
+from os.path import isfile
+
+import pytest
+import safeoutput
 
 
 def _filename():
