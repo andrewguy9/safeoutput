@@ -19,6 +19,7 @@ setup(
         'Development Status :: 5 - Production/Stable',
         'License :: OSI Approved :: MIT License',
         'Topic :: Software Development :: Libraries',
-        'Topic :: System :: Filesystems'
+        'Topic :: System :: Filesystems',
+        'Programming Language :: Python :: 3.7',
     ],
     zip_safe=True)
