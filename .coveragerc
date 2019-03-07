@@ -1,0 +1,7 @@
+[run]
+branch = True
+source = safeoutput
+omit = site-packages
+
+[html]
+directory = coverage
