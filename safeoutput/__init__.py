@@ -23,9 +23,6 @@ class _SafeOutputWrapper(object):
         self.fd = fd
         self.dst = dst
 
-    def rename(self, dst):
-        self.dst = dst
-
     def __enter__(self):
         self.fd.__enter__()
         return self
