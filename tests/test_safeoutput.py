@@ -18,9 +18,13 @@ def ensure_file_absent(path):
 
 
 def expected_file(path, expected, cleanup=True):
+    if isinstance(expected, str):
+        mode = "r"
+    else:
+        mode = "rb"
     try:
         if expected is not None:
-            with open(path, 'r') as f:
+            with open(path, mode) as f:
                 content = f.read()
                 return content == expected
         else:
@@ -29,12 +33,20 @@ def expected_file(path, expected, cleanup=True):
         if cleanup:
             ensure_file_absent(path)
 
-
-def test_with_success():
-    file_name = _filename()
+def test_file_with_success_str():
     file_data = u"testoutput"
+    mode = "w"
+    expect_success(file_data, mode)
+
+def test_file_with_success_bytes():
+    file_data = u"testoutput".encode('utf-8')
+    mode = "wb"
+    expect_success(file_data, mode)
+
+def expect_success(file_data, mode):
+    file_name = _filename()
     ensure_file_absent(file_name)
-    with safeoutput.open(file_name) as f:
+    with safeoutput.open(file_name, mode) as f:
         f.write(file_data)
     assert expected_file(file_name, file_data)
 
