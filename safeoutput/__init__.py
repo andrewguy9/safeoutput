@@ -41,6 +41,7 @@ class _SafeOutputWrapper(object):
                 rename(self.fd.name, self.dst)
                 # self.fd.delete = False # doesn't work in python3...?
             try:
+                LOG.debug(u"closed %s", self.fd.name)
                 self.fd.close()
             except EnvironmentError:  # aka FileNotFoundError in Python 3
                 pass
