@@ -47,7 +47,6 @@ class _SafeOutputWrapper(object):
         try:
             self.fd.close()
         except EnvironmentError:  # aka FileNotFoundError in Python 3
-
             pass
 
     def __exit__(self, exc_type, exc_value, traceback):
