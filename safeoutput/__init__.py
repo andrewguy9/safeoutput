@@ -4,7 +4,6 @@ import sys
 from builtins import object
 from os import rename
 from os.path import abspath, dirname
-from sys import stdout
 from tempfile import NamedTemporaryFile
 
 LOG = logging.getLogger(__name__)
@@ -14,7 +13,7 @@ def open(dst=None, mode="w"):
     if dst:
         fd = NamedTemporaryFile(dir=dirname(abspath(dst)), mode=mode)
     else:
-        fd = stdout
+        fd = sys.stdout
     return _SafeOutputWrapper(fd, dst)
 
 
