@@ -24,7 +24,8 @@ class _SafeOutputWrapper(object):
         self.dst = dst
 
     def __enter__(self):
-        self.fd.__enter__()
+        if self.dst:
+            self.fd.__enter__()
         return self
 
     def __getattr__(self, name):
@@ -41,13 +42,17 @@ class _SafeOutputWrapper(object):
                 rename(self.fd.name, self.dst)
                 # self.fd.delete = False # doesn't work in python3...?
             try:
+                LOG.debug(u"closed %s", self.fd.name)
                 self.fd.close()
             except EnvironmentError:  # aka FileNotFoundError in Python 3
                 pass
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.close(exc_value is None)
-        return self.fd.__exit__(exc_type, exc_value, traceback)
+        if self.dst:
+            return self.fd.__exit__(exc_type, exc_value, traceback)
+        else:
+            return exc_type == None
 
     def __del__(self):
         # If we get to __del__ and have not already committed,

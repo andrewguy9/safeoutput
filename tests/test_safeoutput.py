@@ -102,3 +102,22 @@ def test_write_after_close():
     with pytest.raises(ValueError):
         f.write(file_data)
     assert expected_file(file_name, file_data)
+
+def test_write_stdout_after_close(capsys):
+    file_data = u"testoutput"
+    f = safeoutput.open(None)
+    f.write(file_data)
+    f.close()
+    f.write(file_data)
+    out,err = capsys.readouterr()
+    assert out == file_data + file_data
+    assert err == ""
+
+def test_stdout_with_success_str(capsys):
+    file_data = u"testoutput"
+    mode = "w"
+    with safeoutput.open(None, mode) as f:
+        f.write(file_data)
+    out,err = capsys.readouterr()
+    assert out == file_data
+    assert err == ""
