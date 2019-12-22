@@ -34,15 +34,16 @@ class _SafeOutputWrapper(object):
         return a
 
     def close(self, commit=True):
-        if self.dst is not None and commit == True:
-            LOG.debug(u"renaming %s to %s", self.fd.name, self.dst)
-            self.fd.flush()
-            rename(self.fd.name, self.dst)
-            # self.fd.delete = False # doesn't work in python3...?
-        try:
-            self.fd.close()
-        except EnvironmentError:  # aka FileNotFoundError in Python 3
-            pass
+        if self.dst:
+            if commit == True:
+                LOG.debug(u"renaming %s to %s", self.fd.name, self.dst)
+                self.fd.flush()
+                rename(self.fd.name, self.dst)
+                # self.fd.delete = False # doesn't work in python3...?
+            try:
+                self.fd.close()
+            except EnvironmentError:  # aka FileNotFoundError in Python 3
+                pass
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.close(exc_value is None)
