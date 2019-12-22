@@ -4,7 +4,6 @@ import sys
 from builtins import object
 from os import rename
 from os.path import abspath, dirname
-from sys import stdout
 from tempfile import NamedTemporaryFile
 
 LOG = logging.getLogger(__name__)
@@ -14,7 +13,7 @@ def open(dst=None, mode="w"):
     if dst:
         fd = NamedTemporaryFile(dir=dirname(abspath(dst)), mode=mode)
     else:
-        fd = stdout
+        fd = sys.stdout
     return _SafeOutputWrapper(fd, dst)
 
 
@@ -22,9 +21,6 @@ class _SafeOutputWrapper(object):
 
     def __init__(self, fd, dst):
         self.fd = fd
-        self.dst = dst
-
-    def rename(self, dst):
         self.dst = dst
 
     def __enter__(self):
@@ -43,11 +39,9 @@ class _SafeOutputWrapper(object):
             self.fd.flush()
             rename(self.fd.name, self.dst)
             # self.fd.delete = False # doesn't work in python3...?
-        self.dst = None
         try:
             self.fd.close()
         except EnvironmentError:  # aka FileNotFoundError in Python 3
-
             pass
 
     def __exit__(self, exc_type, exc_value, traceback):
