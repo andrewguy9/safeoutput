@@ -39,7 +39,6 @@ class _SafeOutputWrapper(object):
             self.fd.flush()
             rename(self.fd.name, self.dst)
             # self.fd.delete = False # doesn't work in python3...?
-        self.dst = None
         try:
             self.fd.close()
         except EnvironmentError:  # aka FileNotFoundError in Python 3
