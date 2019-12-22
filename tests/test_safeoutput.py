@@ -113,9 +113,11 @@ def test_write_stdout_after_close(capsys):
     assert out == file_data + file_data
     assert err == ""
 
-def test_stdout_with_success_str():
+def test_stdout_with_success_str(capsys):
     file_data = u"testoutput"
     mode = "w"
     with safeoutput.open(None, mode) as f:
         f.write(file_data)
-    # Verify stdout.
+    out,err = capsys.readouterr()
+    assert out == file_data
+    assert err == ""
