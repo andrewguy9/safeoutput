@@ -13,7 +13,10 @@ def open(dst=None, mode="w"):
     if dst:
         fd = NamedTemporaryFile(dir=dirname(abspath(dst)), mode=mode)
     else:
-        fd = sys.stdout
+        if mode == "w":
+            fd = sys.stdout
+        else:
+            fd = sys.stdout.buffer
     return _SafeOutputWrapper(fd, dst)
 
 
