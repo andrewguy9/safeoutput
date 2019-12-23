@@ -1,6 +1,7 @@
 build/
 dist/
 eggs/
+.eggs/
 safeoutput.egg-info/
 safeoutput/*.pyc
 .tox/
@@ -8,3 +9,5 @@ tests/__pycache__/
 __pycache__
 .coverage
 coverage
+env/
+env3/
