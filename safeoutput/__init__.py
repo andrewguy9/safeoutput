@@ -16,7 +16,10 @@ def open(dst=None, mode="w"):
         if mode == "w":
             fd = sys.stdout
         else:
-            fd = sys.stdout.buffer
+            try:
+                fd = sys.stdout.buffer
+            except AttributeError:
+                fd = sys.stdout
     return _SafeOutputWrapper(fd, dst)
 
 
