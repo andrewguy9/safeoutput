@@ -70,15 +70,16 @@ class _SafeOutputWrapper(object):
 def main(args=None):
     """Buffer stdin and flush, and avoid incomplete files."""
     parser = argparse.ArgumentParser(description=main.__doc__)
-    parser.add_argument(
-        '--binary',
-        dest='mode',
-        action='store_const',
-        const="wb",
-        default="w",
-        help='write in binary mode')
-    parser.add_argument(
-        'output', metavar='FILE', type=unicode, help='Output file')
+    parser.add_argument('--binary',
+                        dest='mode',
+                        action='store_const',
+                        const="wb",
+                        default="w",
+                        help='write in binary mode')
+    parser.add_argument('output',
+                        metavar='FILE',
+                        type=unicode,
+                        help='Output file')
 
     logging.basicConfig(
         level=logging.DEBUG,
