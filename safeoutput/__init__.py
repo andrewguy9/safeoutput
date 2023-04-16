@@ -8,10 +8,12 @@ from tempfile import NamedTemporaryFile
 
 LOG = logging.getLogger(__name__)
 
+def _sameDir(dst):
+    return dirname(abspath(dst))
 
-def open(dst=None, mode="w"):
+def open(dst=None, mode="w", useDir=_sameDir):
     if dst:
-        fd = NamedTemporaryFile(dir=dirname(abspath(dst)), mode=mode)
+        fd = NamedTemporaryFile(dir=useDir(dst), mode=mode)
     else:
         if mode == "w":
             fd = sys.stdout
